@@ -1,7 +1,7 @@
 /datum/round_event_control/aurora_caelus
 	name = "Aurora Caelus"
 	typepath = /datum/round_event/aurora_caelus
-	max_occurrences = 1
+	max_occurrences = 0 // DREDGE EDIT, ORIGINAL: max_occurrences = 1
 	weight = 1
 	earliest_start = 5 MINUTES
 	category = EVENT_CATEGORY_FRIENDLY
