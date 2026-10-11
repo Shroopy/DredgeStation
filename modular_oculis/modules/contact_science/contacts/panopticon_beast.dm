@@ -11,7 +11,7 @@
 	hidden_description = "An antiperceptive quadrupedal creature. It seems to want to be fed logistical data, cargo shipping manifests should work? We advise you do not let it grow hungry."
 	dialogue_lines = list(
 		"Observe. Grow. Help.",
-		"Storm. Cold. Cold. Cold.",
+		"Conceptual. Cold. Cold. Cold.",
 		"Supply. Data. Feed. Reward.",
 		"Watch. Listen. Speak.",
 		"Hunger. Thirst. Logistics. Feed.",

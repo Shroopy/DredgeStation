@@ -1,6 +1,6 @@
 /mob/living/simple_animal/formic
 	name = "anomalous resonance form"
-	desc = "An anomalous contact, brought forth from the Storm."
+	desc = "An anomalous contact, idealized and made corporeal."
 	wander = 0
 	density = 0
 	mob_biotypes = MOB_SPECIAL

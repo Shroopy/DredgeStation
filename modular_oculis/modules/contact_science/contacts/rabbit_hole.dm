@@ -80,7 +80,7 @@
 			cat_quest_started = TRUE
 			echoes += "i have the cloak"
 			balloon_alert(last_speaker, "new echoes detected!")
-			associated_dialogue[/mob/living/simple_animal/formic/black_cat] = "Cat. She is a memory of the Storm now, like me. Old friend... I miss her."
+			associated_dialogue[/mob/living/simple_animal/formic/black_cat] = "Cat. She is a memory now, like me. Old friend... I miss her."
 	else
 		langsay("Analyzer. Formic. Let me see it.")
 

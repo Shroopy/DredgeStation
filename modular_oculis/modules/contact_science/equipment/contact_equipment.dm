@@ -5,7 +5,7 @@ GLOBAL_LIST_INIT(global_resforms, subtypesof(/mob/living/simple_animal/formic))
 	icon = 'modular_oculis/modules/contact_science/icons/contact_equipment.dmi'
 	icon_state = "contactscanner_off"
 	base_icon_state = "contactscanner"
-	desc = "A scanning array used for contacting anomalous resonance forms within the Storm. Uses bluespace crystals as fuel, and must be linked to a contact platform."
+	desc = "A scanning array used for contacting anomalous resonance forms. Uses bluespace crystals as fuel, and must be linked to a contact platform."
 	circuit = /obj/item/circuitboard/machine/contactscanner
 	var/fuel = 0
 	var/operation_time = 6
@@ -166,7 +166,7 @@ GLOBAL_LIST_INIT(global_resforms, subtypesof(/mob/living/simple_animal/formic))
 	icon = 'modular_oculis/modules/contact_science/icons/contact_equipment.dmi'
 	icon_state = "contactpad_off"
 	base_icon_state = "contactpad"
-	desc = "A device used to summon forth anomalous resonance forms from the Storm via use of a formic scanner."
+	desc = "A device used to corporealize contacted anomalous resonance forms via use of a formic scanner array."
 	circuit = /obj/item/circuitboard/machine/contactplatform
 	var/obj/machinery/contactscanner/linkedscanner
 	var/failure_chance = 10
