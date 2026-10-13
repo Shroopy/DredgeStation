@@ -274,13 +274,13 @@
 /datum/status_effect/stabilized/parasite/on_apply()
 	if(ishuman(owner))
 		var/mob/living/carbon/human/H = owner
-		H.physiology.tox_mod -= 0.2
+		MODIFY_PHYSIOLOGY(H, TOX, 0.8)
 	return ..()
 
 /datum/status_effect/stabilized/parasite/on_remove()
 	if(ishuman(owner))
 		var/mob/living/carbon/human/H = owner
-		H.physiology.tox_mod += 0.2
+		MODIFY_PHYSIOLOGY(H, TOX, 1.25)
 
 /obj/item/slimecross/charged/parasite
 	colour = SLIME_TYPE_PARASITE

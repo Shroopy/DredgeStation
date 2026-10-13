@@ -244,7 +244,7 @@
 	icon_state = "blood_cube"
 	icon_living = "blood_cube"
 	icon_dead = "blood_cube_dead"
-	damage_coeff = list(BRUTE = 0.6, BURN = 1, TOX = 0.5, STAMINA = 0, OXY = 1) //a fun little switchup on resistances
+	physiology = list(BRUTE = 0.6, BURN = 1, TOX = 0.5, STAMINA = 0, OXY = 1) //a fun little switchup on resistances
 	butcher_results = list(/obj/item/trophy/blood_skull)
 
 /mob/living/simple_animal/hostile/ooze/gelatinous/blood/attacked_by(obj/item/I, mob/living/user)
