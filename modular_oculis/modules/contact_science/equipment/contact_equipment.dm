@@ -77,9 +77,9 @@ GLOBAL_LIST_INIT(global_resforms, subtypesof(/mob/living/simple_animal/formic))
 
 /obj/machinery/contactscanner/item_interaction(mob/living/user, obj/item/tool, list/modifiers)
 	. = ..()
-	if(!istype(tool, /obj/item/stack/ore/bluespace_crystal))
+	if(!istype(tool, /obj/item/stack/ore/bluespace_crystal) && !istype(tool, /obj/item/stack/sheet/bluespace_crystal))
 		return NONE
-	var/obj/item/stack/ore/bluespace_crystal/fuel_fed = tool
+	var/obj/item/stack/fuel_fed = tool
 	fuel += fuel_fed.amount
 	balloon_alert(user, "fueled")
 	user.visible_message("[user] fuels [src] with [fuel_fed].")
