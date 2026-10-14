@@ -88,6 +88,8 @@ To add a crossbreed:
 			itemcolor = "#FFB6C1"
 		if(SLIME_TYPE_ADAMANTINE)
 			itemcolor = "#008B8B"
+		if(SLIME_TYPE_PARASITE) // OCULIS EDIT ADDITION - CONTACT_SCIENCE
+			itemcolor = COLOR_PALE_GREEN // OCULIS EDIT ADDITION - CONTACT_SCIENCE
 		// OCULIS EDIT ADDITION START - fancy effects
 		if(SLIME_TYPE_RAINBOW)
 			add_visual_effect(/obj/effect/abstract/visual_effect/rainbow)
