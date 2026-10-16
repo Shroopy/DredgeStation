@@ -16,7 +16,7 @@ GLOBAL_LIST_INIT_TYPED(starlight_objects, /obj, list(starlight_object(0)))
 	SET_PLANE_W_SCALAR(glow, LIGHTING_PLANE, offset)
 	glow.layer = LIGHTING_PRIMARY_LAYER
 	glow.blend_mode = BLEND_ADD
-	glow.color = GLOB.starlight_color
+	glow.color = COLOR_BLACK // DREDGE EDIT, ORIGINAL: glow.color = GLOB.starlight_color
 	glow.render_target = SPACE_OVERLAY_RENDER_TARGET(offset)
 	return glow
 
