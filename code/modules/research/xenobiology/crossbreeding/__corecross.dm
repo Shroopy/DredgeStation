@@ -88,6 +88,8 @@ To add a crossbreed:
 			itemcolor = "#FFB6C1"
 		if(SLIME_TYPE_ADAMANTINE)
 			itemcolor = "#008B8B"
+		if(SLIME_TYPE_PARASITE) // OCULIS EDIT ADDITION - CONTACT_SCIENCE
+			itemcolor = COLOR_PALE_GREEN // OCULIS EDIT ADDITION - CONTACT_SCIENCE
 		// OCULIS EDIT ADDITION START - fancy effects
 		if(SLIME_TYPE_RAINBOW)
 			add_visual_effect(/obj/effect/abstract/visual_effect/rainbow)
@@ -95,9 +97,7 @@ To add a crossbreed:
 			itemcolor = COLOR_WHITE
 		// OCULIS EDIT ADDITION END
 	if(itemcolor) // OCULIS EDIT ADDITION - the slimes with their own visual effect set no itemcolor
-			if(SLIME_TYPE_PARASITE) // OCULIS EDIT ADDITION - CONTACT_SCIENCE
-			itemcolor = COLOR_PALE_GREEN
-	add_atom_colour(itemcolor, FIXED_COLOUR_PRIORITY)
+		add_atom_colour(itemcolor, FIXED_COLOUR_PRIORITY)
 
 /obj/item/slimecrossbeaker //To be used as a result for extract reactions that make chemicals.
 	name = "result extract"
