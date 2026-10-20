@@ -33,6 +33,7 @@
 		/mob/living/simple_animal/formic/verdant_growth = "Rebirth. It will only progress once a spirit inhabits it. It draws, you decipher. Stand too close and time may feel strange.",
 		/mob/living/simple_animal/formic/mirror_in_multitudes = "Fear. A game of hide and seek. Mirrors will appear within your station, and you must find and signal them. Don't stand too close to them for too long, and don't use too many hints.",
 		/mob/living/simple_animal/formic/scarlet_ferryman = "Weight. It will give you a weapon of transmutation, and ask for trophies of creatures made with it. Some creatures have other use. It will be angry if you request another bounty - brace for curses.",
+		/mob/living/simple_animal/formic/buried_hatchet = "Ambition. A lonely hatchet buried in a rock. It can be many things for you. Hatchet, screwdriver, wrench, or crowbar. It will need to be fed by violence from time to time. Don't let it get lonely.",
 		/mob/living/simple_animal/formic/black_cat = "What? She is... here too? Could you retrieve her cloak? I have not seen her in a long time..." //connected with the black cat
 	)
 	var/help_damage_min = 5
