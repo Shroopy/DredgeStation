@@ -1,0 +1,139 @@
+/mob/living/simple_animal/formic/rabbit_hole
+	name = "Hole-In-The-Rabbit"
+	desc = "Ichor drips from the hole in this giant rabbit's head."
+	icon = 'modular_oculis/modules/contact_science/icons/rabbit_hole.dmi'
+	icon_state = "hole"
+	initial_size = 2
+
+	nanotrasen_id = "NT-ARDB-009"
+	primary_hazard_labels = "Neurohazard"
+	secondary_hazard_labels = "N/A"
+	initial_line = "You. Like you, once..."
+	hidden_description = "A rabbit about twice the size of the regular species. Despite the hole in its head dripping with an unidentifiable black liquid, it seems to be interested in helping. It may have some knowledge about the Anomalous Resonance Forms."
+	dialogue_lines = list(
+		"Us. We help eachother. Even if I am long gone.",
+		"You. Understand me? I am lost.",
+		"Memory. A cold thing...",
+		"Help.",
+		"Scientists. Us both, work together.",
+		"Cat. Have you seen her? She is lost..." //connected with the black cat
+	)
+	echoes = list(
+		"who are you",
+		"can you help me"
+	)
+	talksound = 'sound/misc/escape_menu/esc_close.ogg'
+
+	var/list/associated_dialogue = list(
+		/mob/living/simple_animal/formic/rabbit_hole = "Me. You're talking to it. I can help you if you show me another resonance form on that scanner.",
+		/mob/living/simple_animal/formic/ozymandian_wreckage = "War. What did it say? Do not let it 'lend you its strength.' 'Proper salvage' is okay. Repair can yield the suit either way.",
+		/mob/living/simple_animal/formic/panopticon_beast = "Surveillance. Do not let it starve. It sees through anything, as do its projectiles. Shut it off if you suspect a breach, do not wait until it is too late.",
+		/mob/living/simple_animal/formic/divine_congealment = "Slime. It holds something special... Radia, or disease. Slime of a new variety. Plasma or uranium create Radia.",
+		/mob/living/simple_animal/formic/olivers_scarecrow = "Maze. Something hidden... bring meson equipment. Old project of an old friend. Bring weapons as well. The dolls will kill you otherwise.",
+		/mob/living/simple_animal/formic/verdant_growth = "Rebirth. It will only progress once a spirit inhabits it. It draws, you decipher. Stand too close and time may feel strange.",
+		/mob/living/simple_animal/formic/mirror_in_multitudes = "Fear. A game of hide and seek. Mirrors will appear within your station, and you must find and signal them. Don't stand too close to them for too long, and don't use too many hints.",
+		/mob/living/simple_animal/formic/scarlet_ferryman = "Weight. It will give you a weapon of transmutation, and ask for trophies of creatures made with it. Some creatures have other use. It will be angry if you request another bounty - brace for curses.",
+		/mob/living/simple_animal/formic/buried_hatchet = "Ambition. A lonely hatchet buried in a rock. It can be many things for you. Hatchet, screwdriver, wrench, or crowbar. It will need to be fed by violence from time to time. Don't let it get lonely.",
+		/mob/living/simple_animal/formic/black_cat = "What? She is... here too? Could you retrieve her cloak? I have not seen her in a long time..." //connected with the black cat
+	)
+	var/help_damage_min = 5
+	var/help_damage_max = 10
+	var/cat_quest_started = FALSE
+
+/mob/living/simple_animal/formic/rabbit_hole/echo_success()
+	var/successful_echo = awaiting_response
+	if(successful_echo == "who are you") //starting dialogue
+		last_response = "who are you"
+		langsay("Scientist. Like you. We are down the rabbit hole together. Analyze others. Show them to me.")
+		echoes -= "who are you"
+		echoes -= "can you help me"
+		echoes += "take a look"
+		balloon_alert(last_speaker, "new echoes detected!")
+	if(successful_echo == "can you help me") //starting dialogue
+		last_response = "can you help me"
+		langsay("Yes. Analyze another with your device, show it to me. I will try.")
+		echoes -= "who are you"
+		echoes -= "can you help me"
+		echoes += "take a look"
+		balloon_alert(last_speaker, "new echoes detected!")
+	if(successful_echo == "take a look") //analysis dialogue
+		last_response = "take a look"
+		look()
+	if(successful_echo == "i have the cloak") //cat quest
+		last_response = "i have the cloak"
+		if(get_dist(src, last_speaker) > 1)
+			langsay("Closer. Please.")
+		else
+			cloak_quest()
+
+/mob/living/simple_animal/formic/rabbit_hole/proc/look()
+	var/obj/item/to_check = last_speaker.get_active_held_item()
+	if(!to_check)
+		langsay("Analyzer. Formic. Let me see it.")
+		return
+	if(istype(to_check, /obj/item/contactanalyzer))
+		var/obj/item/contactanalyzer/analyzer = to_check
+		langsay(associated_dialogue[(analyzer.last_scanned).type])
+		if(!istype(analyzer.last_scanned, /mob/living/simple_animal/formic/rabbit_hole) && !istype(analyzer.last_scanned, /mob/living/simple_animal/formic/black_cat)) //do not deal brain damage for self or special interaction
+			last_speaker.adjust_organ_loss(ORGAN_SLOT_BRAIN, rand(help_damage_min, help_damage_max), 80)
+			to_chat(last_speaker, span_warning("Something rings in the back of your mind... like a tiny hole, burning."))
+		if(istype(analyzer.last_scanned, /mob/living/simple_animal/formic/black_cat) && !cat_quest_started)
+			cat_quest_started = TRUE
+			echoes += "i have the cloak"
+			balloon_alert(last_speaker, "new echoes detected!")
+			associated_dialogue[/mob/living/simple_animal/formic/black_cat] = "Cat. She is a memory now, like me. Old friend... I miss her."
+	else
+		langsay("Analyzer. Formic. Let me see it.")
+
+/mob/living/simple_animal/formic/rabbit_hole/proc/cloak_quest()
+	var/obj/item/to_check = last_speaker.get_active_held_item()
+	if(!to_check)
+		langsay("Where?")
+		return
+	if(istype(to_check, /obj/item/clothing/neck/cloak/black_cat_coat))
+		langsay("Thanks. It is good to see a trace of her again... take my words with you.")
+		last_speaker.adjust_organ_loss(ORGAN_SLOT_BRAIN, rand(help_damage_min, help_damage_max) * -10, 80)
+		to_chat(last_speaker, span_notice("Your mind is filled with clarity. Something appears at your feet."))
+		echoes -= "i have the cloak"
+		playsound(last_speaker, 'sound/effects/portal/portal_travel.ogg', 40)
+		var/obj/item/camera_hole/C = new /obj/item/camera_hole(get_turf(last_speaker))
+		C.ichor_words = associated_dialogue
+		C.ichor_words[/mob/living/simple_animal/formic/rabbit_hole] = "Me. Take a picture of others. I will continue providing my advice." //change dialogue for rabbit hole because it doesnt make sense in the context of the camera
+		qdel(to_check)
+	else
+		langsay("Where?")
+
+/obj/item/camera_hole
+	name = "Hole-In-The-Camera"
+	desc = "A small camera with a hole puncturing its systems. You would think this prevents its function, but the voice of the ichor disagrees."
+	icon = 'modular_oculis/modules/contact_science/icons/rabbit_hole.dmi'
+	icon_state = "camera"
+	w_class = WEIGHT_CLASS_SMALL
+	obj_flags = CONDUCTS_ELECTRICITY
+	item_flags = NOBLUDGEON
+	slot_flags = ITEM_SLOT_BELT
+	throwforce = 0
+	throw_speed = 3
+	throw_range = 7
+	custom_materials = list(/datum/material/iron=SMALL_MATERIAL_AMOUNT * 0.3, /datum/material/glass=SMALL_MATERIAL_AMOUNT * 0.2)
+	interaction_flags_click = ALLOW_RESTING
+
+	var/scan_distance = 9
+	var/list/ichor_words = list()
+
+/obj/item/camera_hole/ranged_interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+	if(istype(interacting_with, /mob/living/simple_animal/formic) && can_see(user, interacting_with, scan_distance) && do_after(user, 1 SECONDS, src))
+		var/mob/living/simple_animal/formic/analyzed_mob = interacting_with
+		analyze_form(analyzed_mob, user)
+		return ITEM_INTERACT_SUCCESS
+
+/obj/item/camera_hole/interact_with_atom(atom/interacting_with, mob/living/user, list/modifiers)
+	if(istype(interacting_with, /mob/living/simple_animal/formic) && can_see(user, interacting_with, scan_distance) && do_after(user, 1 SECONDS, src))
+		var/mob/living/simple_animal/formic/analyzed_mob = interacting_with
+		analyze_form(analyzed_mob, user)
+		return ITEM_INTERACT_SUCCESS
+
+/obj/item/camera_hole/proc/analyze_form(mob/living/simple_animal/formic/analyzed_form, mob/living/user)
+	playsound(user, SFX_POLAROID, 60, TRUE, -2, TRUE, FALSE)
+	user.visible_message(span_notice("[user] captures the visage of [analyzed_form]."), span_notice("You capture the visage of [analyzed_form]."))
+	to_chat(user, boxed_message(ichor_words[analyzed_form.type]), type = MESSAGE_TYPE_INFO)
