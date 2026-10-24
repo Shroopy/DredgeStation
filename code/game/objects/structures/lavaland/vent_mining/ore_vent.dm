@@ -693,10 +693,24 @@
 	discovered = TRUE
 	unique_vent = TRUE
 	boulder_size = BOULDER_SIZE_SMALL
+	/* // DREDGE EDIT REMOVAL START
 	mineral_breakdown = list(
 		/datum/material/iron = 1,
 		/datum/material/glass = 1,
 	)
+	*/ // DREDGE EDIT REMOVAL END
+	// DREDGE EDIT ADDITION START
+	mineral_breakdown = list(
+		/obj/item/stack/sheet/iron = 20,
+		/obj/item/stack/sheet/glass = 20,
+		/obj/item/stack/sheet/mineral/plasma = 14,
+		/obj/item/stack/sheet/mineral/silver = 8,
+		/obj/item/stack/sheet/mineral/titanium = 8,
+		/obj/item/stack/sheet/mineral/uranium = 3,
+		/obj/item/stack/sheet/mineral/gold = 3,
+		/obj/item/stack/sheet/mineral/diamond = 1,
+	)
+	// DREDGE EDIT ADDITION END
 	network_power_flags = CANDELA_NETWORK_POWERED | CANDELA_NETWORK_BOOSTED
 
 /obj/structure/ore_vent/starter_resources/Initialize(mapload)
