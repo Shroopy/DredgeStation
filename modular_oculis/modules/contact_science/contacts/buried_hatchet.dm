@@ -5,8 +5,8 @@
 	icon_state = "buried_hatchet"
 
 	nanotrasen_id = "NT-ARDB-013"
-	primary_hazard_labels = "Dominiohazard"
-	secondary_hazard_labels = "N/A"
+	primary_hazard_labels = "N/A"
+	secondary_hazard_labels = "Hostile manifestation"
 	initial_line = "Oh, would you please take me with you?"
 	hidden_description = "A crude hatchet buried into a thick basalt formation. The blade of the hatchet is comprised of a metal alloy which is able to reform and shape itself to a limited extent. It vocalizes by vibrating this metal composition."
 	dialogue_lines = list(
@@ -22,7 +22,7 @@
 	echoes = list(
 		"what is your name"
 	)
-	talksound = 'sound/mobs/non-humanoids/roro_warble.ogg'
+	talksound = 'sound/mobs/non-humanoids/roro/roro_warble.ogg'
 
 	var/unburied_icon = "unburied"
 
@@ -56,27 +56,30 @@
 		echoes -= "i will take you"
 		echoes += "what are you still doing here"
 		icon_state = "unburied"
-		echoes = list("...")
+		dialogue_lines = list("...")
 		talksound = null
 		spoken_lang = /datum/language/terrum
 		balloon_alert(last_speaker, "new echoes detected!")
 	if(successful_echo == "what are you still doing here") //post-dialogue
-	if(last_response == "what are you still doing here")
-		langsay("You pester me.")
-		return
-	last_response = "what are you still doing here"
-	langsay("Just biding my time.")
+		if(last_response == "what are you still doing here")
+			langsay("You pester me.")
+			return
+		last_response = "what are you still doing here"
+		langsay("Just biding my time.")
 
 /obj/item/fireaxe/boardingaxe/buried_hatchet
 	name = "Buried Hatchet"
 	desc = "A hulking, shapeshifting cleaver. You can hear it speaking, or at least, vibrating its edge to resemble speech."
 	icon = 'modular_oculis/modules/contact_science/icons/buried_hatchet_tool.dmi'
-	icon_state = "hatchet"
+	icon_state = "hatchet0"
+	inhand_icon_state = "hatchet0"
+	base_icon_state = "hatchet"
 	force_unwielded = 4
 	force_wielded = 16
 	demolition_mod = 1
 	sharpness = SHARP_EDGED
 	tool_behaviour = TOOL_SAW
+	obj_flags = INDESTRUCTIBLE
 
 	var/mob/living/carbon/human/owner //who will speak to the hatchet
 	var/list/echoes = list( //potential commands
@@ -86,15 +89,13 @@
 		"crowbar"
 	)
 	var/living_state = "happy"
-	var/talksound = 'sound/mobs/non-humanoids/roro_warble.ogg'
+	var/current_form = "hatchet"
+	var/talksound = 'sound/mobs/non-humanoids/roro/roro_warble.ogg'
 	var/hearing_range = 8
 
 	var/loneliness_threshold = 9 //distance required for lonely state
-
-	var/hunger_timer_max = 250
-	var/hunger_timer = 250 //if this hits zero, the hatchet will try to attack something nearby to refill
-	var/hunger_attack_timer_max = 10
-	var/hunger_attack_timer = 10
+	var/lonely_ticks = 0
+	var/lonely_limit = 250 //how long does it have to be left alone for the tax collectors to come
 
 	var/dialogue_timer_max = 60
 	var/dialogue_timer = 60
@@ -105,17 +106,16 @@
 		"I love you, friend!",
 		"Let's keep working together!",
 		"This is so fun!",
-		"I'm having so much fun!"
+		"I'm having so much fun!",
+		"Please don't ever leave my side...",
+		"Let's keep sticking together!",
+		"Look at us go!"
 	)
 	var/list/lonely_lines = list(
 		"Where are you..?",
 		"Are you gone for good..?",
-		"I miss you."
-	)
-	var/list/hungry_lines = list(
-		"I feel... hungry...",
-		"Sorry... I think I need something to eat...",
-		"I feel a bit peckish..."
+		"I miss you.",
+		"Don't let them take me..."
 	)
 	var/list/change_lines = list(
 		"hatchet" = "Okay! Hatchet it is!",
@@ -123,11 +123,12 @@
 		"wrench" = "On it! Wrench!",
 		"crowbar" = "Need to pry a door?"
 	)
+	var/breaching = FALSE
 
 /obj/item/fireaxe/boardingaxe/buried_hatchet/Initialize()
 	. = ..()
 	START_PROCESSING(SSprocessing, src)
-	soundsay("Okay! Just say what you need; hatchet, screwdriver, wrench, or crowbar!")
+	soundsay("Okay! Just say what you need! Hatchet, screwdriver, wrench, or crowbar!")
 	active_lines = happy_lines
 
 /obj/item/fireaxe/boardingaxe/buried_hatchet/proc/soundsay(var/message)
@@ -144,72 +145,108 @@
 	if(get_dist(src, source) <= hearing_range)
 		for(var/needle in echoes)
 			if(findtext(haystack, needle)) //success
-				change_form(suggested_form)
-				soundsay(change_lines[needle])
+				change_form(needle)
+				current_form = needle
+				addtimer(CALLBACK(src, PROC_REF(say_form)), 3, TIMER_UNIQUE | TIMER_DELETE_ME) //small dialogue delay
 				return
 
-/obj/item/fireaxe/boardingaxe/buried_hatchet/proc/change_form(var/suggested_form)
+/obj/item/fireaxe/boardingaxe/buried_hatchet/proc/say_form()
+	soundsay(change_lines[current_form])
+
+/obj/item/fireaxe/boardingaxe/buried_hatchet/proc/change_form(suggested_form)
 	if(suggested_form == "hatchet")
 		force_unwielded = 4
 		force_wielded = 16
 		demolition_mod = 1
-		icon_state = "hatchet"
+		icon_state = "hatchet0"
+		base_icon_state = "hatchet"
 		sharpness = SHARP_EDGED
 		tool_behaviour = TOOL_SAW
 	if(suggested_form == "screwdriver")
 		force_unwielded = 5
 		force_wielded = 12
 		demolition_mod = 1
-		icon_state = "screwdriver"
+		icon_state = "screwdriver0"
+		base_icon_state = "screwdriver"
 		sharpness = SHARP_POINTY
 		tool_behaviour = TOOL_SCREWDRIVER
 	if(suggested_form == "wrench")
 		force_unwielded = 3
 		force_wielded = 10
 		demolition_mod = 1
-		icon_state = "wrench"
+		icon_state = "wrench0"
+		base_icon_state = "wrench"
 		sharpness = SHARP_EDGED
 		tool_behaviour = TOOL_WRENCH
 	if(suggested_form == "crowbar")
 		force_unwielded = 3
 		force_wielded = 14
 		demolition_mod = 1
-		icon_state = "crowbar"
+		icon_state = "crowbar0"
+		base_icon_state = "crowbar"
 		sharpness = SHARP_EDGED
 		tool_behaviour = TOOL_CROWBAR
 
-/obj/item/fireaxe/boardingaxe/buried_hatchet/process(seconds_per_tick)
-	if(hunger_timer > 0)
-		hunger_timer -= seconds_per_tick
+/obj/item/fireaxe/boardingaxe/buried_hatchet/process(seconds_per_tick = SSOBJ_DT)
 	if(dialogue_timer > 0)
 		dialogue_timer -= seconds_per_tick
+	else
+		soundsay(pick(active_lines))
+		dialogue_timer = dialogue_timer_max
 	if(get_dist(src, owner) > loneliness_threshold)
 		living_state = "lonely"
 		active_lines = lonely_lines
+		lonely_ticks += 1
+		if(lonely_ticks >= lonely_limit && !breaching) //if it's been lonely long enough, breach
+			breaching = TRUE
+			sound_to_playing_players('sound/effects/magic/lightning_chargeup.ogg')
+			addtimer(CALLBACK(src, PROC_REF(breach)), 80, TIMER_UNIQUE | TIMER_DELETE_ME)
 	else
 		living_state = "happy"
 		active_lines = happy_lines
-	if(hunger_timer <= dialogue_timer_max) //hungry lines come in before actual hunger does as a warning. warning time equals dialogue timer max to make sure they can get a line in
-		active_lines = hungry_lines
-	if(hunger_timer <= 0)
-		living_state = "hungry"
-		if(hunger_attack_timer <= 0)
-			hatchet_attack()
-			hunger_attack_timer = hunger_attack_timer_max
-		else
-			hunger_attack_timer -= seconds_per_tick
-	if(dialogue_timer <= 0)
-		dialogue_timer = dialogue_timer_max
-		soundsay(pick(active_lines))
 
-/obj/item/fireaxe/boardingaxe/buried_hatchet/proc/hatchet_attack()
-	if(owner.get_active_held_item() == src)	//does not proc if owner isn't holding the axe
-		var/list/mob/living/targets = list()
-		for(var/mob/living/nearby_mobs in oview(owner, 1))
-				targets += nearby_mobs
-		owner.set_combat_mode(TRUE)
-		if(owner.ClickOn(pick(targets)))
-			to_chat(owner, span_warning("The axe acts on its own!"))
-			owner.log_message(" attacked someone due to a the Buried Hatchet's hunger", LOG_ATTACK) //the attack logs itself
-			hunger_timer = hunger_timer_max //then, satiate
-		owner.set_combat_mode(FALSE)
+/obj/item/fireaxe/boardingaxe/buried_hatchet/proc/breach()
+	priority_announce("An anomalous ideaform has breached containment within [station_name()]. Please route to subdue the hostile form.")
+	var/area/spawning_area = get_area(src)
+	for(var/i in 1 to 5)
+		new /mob/living/basic/tax_collector(pick(spawning_area.contents))
+	qdel(src)
+
+/mob/living/basic/tax_collector
+	name = "Tax Collector"
+	desc = "To leave someone alone in a world like this is to condemn them."
+	health = 200
+	maxHealth = 200
+	speed = 5
+	icon = 'modular_oculis/modules/contact_science/icons/tax_collector.dmi'
+	icon_state = "tax_collector"
+	environment_smash = ENVIRONMENT_SMASH_WALLS
+	melee_damage_lower = 8
+	melee_damage_upper = 12
+	melee_damage_type = BURN
+	obj_damage = 10
+	attack_vis_effect = ATTACK_EFFECT_SLASH
+	attack_verb_continuous = "slashes at"
+	attack_verb_simple = "slash at"
+	incorporeal_move = INCORPOREAL_MOVE_JAUNT
+	death_sound = 'sound/effects/portal/portal_travel.ogg'
+	death_message = "vanishes, just as quickly as it came."
+	ai_controller = /datum/ai_controller/basic_controller/tax_collector
+	status_flags = CANPUSH | CANSTUN
+	unsuitable_atmos_damage = 0
+	unsuitable_cold_damage = 0
+	faction = list(FACTION_HOSTILE)
+
+/datum/ai_controller/basic_controller/tax_collector
+	behavior_tree_json = "code/modules/mob/living/basic/ruin_defender/zombie.bt.json" //theyre effectively strong zombies
+	blackboard = list(
+		BB_TARGET_MINIMUM_STAT = HARD_CRIT,
+		BB_TARGETING_STRATEGY = /datum/targeting_strategy/basic,
+		BB_BASIC_MOB_SPEAK_LINES = list(
+			BB_EMOTE_HEAR = list("groans.", "chirps.", "whistles."),
+			BB_EMOTE_SEE = list("shimmers.", "twitches."),
+			BB_SPEAK_CHANCE = 3,
+		),
+	)
+
+	ai_movement = /datum/ai_movement/basic_avoidance
