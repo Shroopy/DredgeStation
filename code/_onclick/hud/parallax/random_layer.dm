@@ -48,8 +48,5 @@
 
 /// Big asteroid rocks appear in the background
 /atom/movable/screen/parallax_layer/random/asteroids
-	//IRIS EDIT START
-	icon = 'modular_iris/master_files/icons/effects/rockbox.dmi'
-	icon_state = "rockbox"
-	//IRIS EDIT END
+	icon_state = "asteroids"
 	layer = 4
