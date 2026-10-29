@@ -15,7 +15,7 @@
 /datum/round_event/nightshift
 	announce_when = 1
 	start_when = 1
-	end_when = 700 //~22 Minutes
+	end_when = 1800 // 1 hour, hopefully // DREDGE EDIT, ORIGINAL: end_when = 700 //~22 Minutes
 	fakeable = FALSE
 
 	///Whether the nightshift is on or not, synced to the alert level (which decides whether we're active)

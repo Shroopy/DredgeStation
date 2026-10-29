@@ -663,19 +663,19 @@
 		// NOVA EDIT ADDITION START - AGE EXAMINE
 		if(-INFINITY to 17)
 			age_text = "too young to be here"
-		if(18 to 25)
+		if(18 to 34) // DREDGE EDIT, ORIGINAL: if(18 to 25)
 			age_text = "a young adult"
 		// NOVA EDIT ADDITION END - AGE EXAMINE
-		if(26 to 35)
+		if(35 to 44) // DREDGE EDIT, ORIGINAL: if(26 to 35)
 			age_text = "of adult age"
-		if(36 to 55)
+		if(45 to 64) // DREDGE EDIT, ORIGINAL: if(36 to 55)
 			age_text = "middle-aged"
-		if(56 to 75)
+		if(65 to 75) // DREDGE EDIT, ORIGINAL: if(56 to 75)
 			age_text = "rather old"
-		if(76 to 100)
+		if(76 to 100) // DREDGE EDIT, ORIGINAL: if(76 to 100)
 			age_text = "very old"
 		if(101 to INFINITY)
-			age_text = "withering away"
+			age_text = "ancient" // DREDGE EDIT, ORIGINAL: age_text = "withering away"
 
 	return span_notice("[p_They()] appear[p_s()] to be [age_text].")
 
