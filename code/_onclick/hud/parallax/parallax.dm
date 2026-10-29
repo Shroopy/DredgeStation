@@ -346,6 +346,10 @@
 		var/atom/movable/screen/parallax_layer/parallax = generate_space_layer(space_layer)
 		if (parallax)
 			parallax_layers_cached += parallax
+	// DREDGE EDIT ADDITION START
+	if(parallax_layers_cached)
+		parallax_layers_cached += new /atom/movable/screen/parallax_layer/recolor(null, null, src)
+	// DREDGE EDIT ADDITION END
 
 	if(draw_old_space)
 		parallax_layers_cached += new /atom/movable/screen/parallax_layer/old(null, null, src)
@@ -534,5 +538,14 @@
 
 /atom/movable/screen/parallax_layer/planet/update_o()
 	return //Shit won't move
+
+// DREDGE EDIT ADDITION START
+/atom/movable/screen/parallax_layer/recolor
+	icon = 'modular_oculis/modules/parallax/icons/parallax.dmi'
+	icon_state = "recolor"
+	speed = 0
+	layer = 31
+	blend_mode = BLEND_OVERLAY
+// DREDGE EDIT ADDITION END
 
 #undef PARALLAX_ICON_SIZE // OCULIS EDIT
