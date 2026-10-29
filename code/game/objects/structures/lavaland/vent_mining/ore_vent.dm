@@ -701,14 +701,14 @@
 	*/ // DREDGE EDIT REMOVAL END
 	// DREDGE EDIT ADDITION START
 	mineral_breakdown = list(
-		/obj/item/stack/sheet/iron = 20,
-		/obj/item/stack/sheet/glass = 20,
-		/obj/item/stack/sheet/mineral/plasma = 14,
-		/obj/item/stack/sheet/mineral/silver = 8,
-		/obj/item/stack/sheet/mineral/titanium = 8,
-		/obj/item/stack/sheet/mineral/uranium = 3,
-		/obj/item/stack/sheet/mineral/gold = 3,
-		/obj/item/stack/sheet/mineral/diamond = 1,
+		/datum/material/iron = 20,
+		/datum/material/glass = 20,
+		/datum/material/plasma = 14,
+		/datum/material/silver = 8,
+		/datum/material/titanium = 8,
+		/datum/material/uranium = 3,
+		/datum/material/gold = 3,
+		/datum/material/diamond = 1,
 	)
 	// DREDGE EDIT ADDITION END
 	network_power_flags = CANDELA_NETWORK_POWERED | CANDELA_NETWORK_BOOSTED
