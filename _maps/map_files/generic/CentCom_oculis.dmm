@@ -2,6 +2,94 @@
 "aaa" = (
 /turf/open/space/basic,
 /area/space)
+"aab" = (
+/obj/effect/turf_decal/tile/hot_pink{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/hot_pink{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/hot_pink{
+	dir = 4
+	},
+/turf/open/floor/iron/dark,
+/area/centcom/castor/arrivals)
+"aac" = (
+/obj/effect/turf_decal/tile/hot_pink{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/hot_pink{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/hot_pink{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/hot_pink{
+	dir = 2
+	},
+/turf/open/floor/iron/dark,
+/area/centcom/castor/arrivals)
+"aae" = (
+/obj/effect/turf_decal/tile/hot_pink{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/hot_pink{
+	dir = 2
+	},
+/turf/open/floor/iron/dark,
+/area/centcom/castor/arrivals)
+"aaf" = (
+/obj/effect/turf_decal/tile/hot_pink{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/hot_pink{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/hot_pink{
+	dir = 2
+	},
+/turf/open/floor/iron/dark,
+/area/centcom/castor/arrivals)
+"aag" = (
+/obj/effect/turf_decal/tile/hot_pink{
+	dir = 8
+	},
+/turf/open/floor/iron/dark/smooth_edge{
+	dir = 4
+	},
+/area/centcom/castor/arrivals)
+"aah" = (
+/obj/effect/turf_decal/tile/hot_pink{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/hot_pink{
+	dir = 4
+	},
+/turf/open/floor/iron/dark,
+/area/centcom/castor/arrivals)
+"aai" = (
+/obj/effect/turf_decal/tile/hot_pink{
+	dir = 1
+	},
+/obj/effect/turf_decal/tile/hot_pink{
+	dir = 8
+	},
+/obj/effect/turf_decal/tile/hot_pink{
+	dir = 4
+	},
+/obj/effect/turf_decal/tile/hot_pink{
+	dir = 2
+	},
+/turf/open/floor/iron/dark,
+/area/centcom/castor/arrivals)
+"aaj" = (
+/obj/effect/turf_decal/tile/hot_pink{
+	dir = 1
+	},
+/turf/open/floor/iron/dark/smooth_edge{
+	dir = 4
+	},
+/area/centcom/castor/arrivals)
 "aam" = (
 /obj/structure/closet{
 	name = "coat closet"
@@ -28708,16 +28796,6 @@
 	},
 /turf/open/floor/iron/pattern_1,
 /area/centcom/castor/hallway_one)
-"tPp" = (
-/obj/effect/turf_decal/tile/hot_pink{
-	dir = 4
-	},
-/obj/effect/turf_decal/tile/hot_pink,
-/obj/effect/turf_decal/tile/hot_pink{
-	dir = 8
-	},
-/turf/open/floor/iron/dark,
-/area/centcom/castor/arrivals)
 "tPG" = (
 /obj/structure/closet/emcloset{
 	name = "plasmaperson emergency closet"
@@ -42694,8 +42772,8 @@ pen
 vHK
 uFc
 xyo
-vgm
-vgm
+uMy
+tKt
 tVg
 cqv
 sck
@@ -42952,7 +43030,7 @@ vHK
 rJu
 xyo
 rxB
-gWb
+aab
 tVg
 pQp
 ylf
@@ -43208,7 +43286,7 @@ krE
 vHK
 uFc
 xyo
-tKt
+uMy
 uMy
 tVg
 wmW
@@ -43465,7 +43543,7 @@ jCs
 qaU
 sVO
 xyo
-vgm
+aac
 gWb
 tVg
 aWh
@@ -43722,8 +43800,8 @@ krE
 vHK
 uFc
 xyo
-vgm
-vgm
+tKt
+uMy
 tVg
 pQp
 ylf
@@ -43979,7 +44057,7 @@ krE
 vHK
 rJu
 xyo
-vgm
+aab
 gWb
 tVg
 wmW
@@ -44236,8 +44314,8 @@ pen
 vHK
 uFc
 xyo
-xyo
 uMy
+tKt
 tVg
 aWh
 aWh
@@ -44493,8 +44571,8 @@ aBP
 cqe
 uFc
 xyo
-tKt
-vgm
+aah
+aae
 tVg
 aWh
 aWh
@@ -44750,8 +44828,8 @@ pen
 vHK
 uFc
 xyo
-rxB
-tPp
+tKt
+vgm
 tVg
 oBF
 oBF
@@ -45007,8 +45085,8 @@ krE
 vHK
 uFc
 xyo
-xyo
-xyo
+aai
+aaf
 xyo
 xyo
 xyo
@@ -45264,8 +45342,8 @@ qPy
 adw
 qRn
 gSm
-gSm
-gSm
+aaj
+aag
 gSm
 gSm
 gSm
