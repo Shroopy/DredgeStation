@@ -61,9 +61,16 @@ GLOBAL_LIST_EMPTY(starlight)
 	run_later = TRUE
 	plane = PLANE_SPACE
 	layer = SPACE_LAYER
+	/* // DREDGE REMOVAL START
 	light_power = 1
 	light_range = 2
 	light_color = COLOR_STARLIGHT
+	*/ // DREDGE REMOVAL END
+	// DREDGE ADDITION START
+	light_power = -2
+	light_range = 1.75
+	light_color = COLOR_WHITE
+	// DREDGE ADDITION END
 	light_height = LIGHTING_HEIGHT_SPACE
 	light_on = FALSE
 	space_lit = TRUE

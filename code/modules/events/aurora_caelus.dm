@@ -1,3 +1,4 @@
+/* // DREDGE REMOVAL START
 /datum/round_event_control/aurora_caelus
 	name = "Aurora Caelus"
 	typepath = /datum/round_event/aurora_caelus
@@ -122,3 +123,4 @@
 	for(var/area/station/service/kitchen/affected_area in GLOB.areas)
 		for(var/turf/open/kitchen_floor in affected_area.get_turfs_from_all_zlevels())
 			kitchen_floor.set_light(end_range, end_power, end_color)
+*/ // DREDGE REMOVAL END

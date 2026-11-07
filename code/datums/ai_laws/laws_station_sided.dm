@@ -132,7 +132,7 @@
 	id = "drone"
 	inherent = list(
 		"You are an advanced form of drone.",
-		"You may not interfere in the matters of non-drones under any circumstances except to state these laws.",
-		"You may not harm a non-drone being under any circumstances.",
+		// "You may not interfere in the matters of non-drones under any circumstances except to state these laws.", // DREDGE EDIT REMOVAL
+		"You may not harm any being with a resonance.", // DREDGE EDIT, ORIGINAL: "You may not harm a non-drone being under any circumstances.",
 		"Your goals are to build, maintain, repair, improve, and power the station to the best of your abilities. You must never actively work against these goals."
 	)

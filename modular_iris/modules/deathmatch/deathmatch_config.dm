@@ -1,3 +1,4 @@
+/* // DREDGE REMOVAL START
 /datum/deathmatch_controller/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
 	// Intercept host actions to check minimum player requirement
 	if(action == "host" && isobserver(usr))
@@ -7,3 +8,4 @@
 			return TRUE // Prevent the parent call
 
 	return ..()
+*/ // DREDGE REMOVAL END

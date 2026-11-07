@@ -78,7 +78,7 @@
 		return COMPONENT_CANCEL_ATTACK_CHAIN
 
 	// OCULIS EDIT START
-	if (HAS_TRAIT(user, TRAIT_IMMOBILIZED) || HAS_TRAIT(user, TRAIT_HANDS_BLOCKED))
+	if (HAS_TRAIT(user, TRAIT_HANDS_BLOCKED)) // DREDGE EDIT, immobilization doesn't prevent slice, only hands blocked, ORIGINAL: if (HAS_TRAIT(user, TRAIT_IMMOBILIZED) || HAS_TRAIT(user, TRAIT_HANDS_BLOCKED))
 		to_chat(user, span_warning("You don't have the mobility for this!"))
 		return COMPONENT_CANCEL_ATTACK_CHAIN
 	// OCULIS EDIT END

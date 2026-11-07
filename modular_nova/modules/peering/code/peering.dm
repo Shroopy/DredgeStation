@@ -28,6 +28,7 @@
 		return FALSE
 	if(!can_look_up()) // shared incapacitation + cooldown gate with look up/down
 		return FALSE
+	/* // DREDGE EDIT REMOVAL START
 	// No peering while hefting a weapon that needs two hands: wielded two-handers, plus
 	// heavy guns (e.g. the M64 shotgun) that require both hands to fire without carrying
 	// TRAIT_WIELDED. Scoped guns fall in here too, so they use their own scope zoom instead.
@@ -36,6 +37,7 @@
 		if(HAS_TRAIT(held, TRAIT_WIELDED) || (istype(held_gun) && held_gun.weapon_weight >= WEAPON_HEAVY))
 			to_chat(src, span_warning("You can't peer into the distance while handling [held]."))
 			return FALSE
+	*/ // DREDGE EDIT REMOVAL END
 	var/turf/our_turf = get_turf(src)
 	if(!our_turf || target.z != our_turf.z)
 		return FALSE

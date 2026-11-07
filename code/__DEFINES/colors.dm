@@ -244,7 +244,7 @@
 #define COLOR_PERIWINKLEE "#9999FF"
 
 /// Starlight!
-#define COLOR_STARLIGHT "#8589fa"
+#define COLOR_STARLIGHT "#000000" // DREDGE EDIT, ORIGINAL: #define COLOR_STARLIGHT "#8589fa"
 /**
  * Some defines to generalise colours used in lighting.
  *

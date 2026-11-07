@@ -1,4 +1,4 @@
-#define PARALLAX_ICON_SIZE 672 // IRIS EDIT
+#define PARALLAX_ICON_SIZE 480 // DREDGE EDIT
 
 /// Decides if parallax should be rendered or not, and sets things up accordingly
 /atom/movable/screen/parallax_home/proc/check_parallax()
@@ -324,10 +324,9 @@
 		if(1)
 			return new /atom/movable/screen/parallax_layer/layer_1(null, null, src)
 		if(2)
-			return new /atom/movable/screen/parallax_layer/stars(null, null, src) // OCULIS EDIT, ORIGINAL: return new /atom/movable/screen/parallax_layer/layer_2(null, null, src)
+			return new /atom/movable/screen/parallax_layer/layer_2(null, null, src)
 		if(3)
 			return new /atom/movable/screen/parallax_layer/planet(null, null, src)
-		/* // OCULIS EDIT REMOVAL START
 		if(4)
 			if(SSparallax.random_layer)
 				return new SSparallax.random_layer.type(null, null, src, FALSE, SSparallax.random_layer)
@@ -336,7 +335,6 @@
 		if(5)
 			if(SSparallax.random_layer)
 				return new /atom/movable/screen/parallax_layer/layer_3(null, null, src)
-		*/ //OCULIS EDIT REMOVAL END
 
 /atom/movable/screen/parallax_home/proc/regenerate_layers()
 	clear_layers()
@@ -348,6 +346,10 @@
 		var/atom/movable/screen/parallax_layer/parallax = generate_space_layer(space_layer)
 		if (parallax)
 			parallax_layers_cached += parallax
+	// DREDGE EDIT ADDITION START
+	if(parallax_layers_cached)
+		parallax_layers_cached += new /atom/movable/screen/parallax_layer/recolor(null, null, src)
+	// DREDGE EDIT ADDITION END
 
 	if(draw_old_space)
 		parallax_layers_cached += new /atom/movable/screen/parallax_layer/old(null, null, src)
@@ -360,7 +362,7 @@
 
 // We need parallax to always pass its args down into initialize, so we immediate init it
 /atom/movable/screen/parallax_layer
-	icon = 'modular_iris/master_files/icons/effects/skybox.dmi' // IRIS EDIT
+	icon = 'icons/effects/parallax.dmi'
 	var/speed = 1
 	var/offset_x = 0
 	var/offset_y = 0
@@ -438,6 +440,7 @@
 /atom/movable/screen/parallax_layer/proc/tileable_appearance()
 	return mutable_appearance(icon, icon_state)
 
+/* // DREDGE REMOVAL START
 // OCULIS EDIT ADDITION START
 /atom/movable/screen/parallax_layer/layer_1
 	icon_state = "dyable"
@@ -458,9 +461,8 @@
 	layer = 1
 	speed = 0.5
 // OCULIS EDIT ADDITION END
+*/ // DREDGE REMOVAL END
 
-// OCULIS EDIT REMOVAL START
-/*
 /atom/movable/screen/parallax_layer/layer_1
 	icon_state = "layer1"
 	speed = 0.6
@@ -475,8 +477,6 @@
 	icon_state = "layer3"
 	speed = 1.4
 	layer = 3
-*/
-// OCULIS EDIT REMOVAL END
 
 /atom/movable/screen/parallax_layer/old
 	icon = null
@@ -538,5 +538,14 @@
 
 /atom/movable/screen/parallax_layer/planet/update_o()
 	return //Shit won't move
+
+// DREDGE EDIT ADDITION START
+/atom/movable/screen/parallax_layer/recolor
+	icon = 'modular_oculis/modules/parallax/icons/parallax.dmi'
+	icon_state = "recolor"
+	speed = 0
+	layer = 31
+	blend_mode = BLEND_OVERLAY
+// DREDGE EDIT ADDITION END
 
 #undef PARALLAX_ICON_SIZE // OCULIS EDIT
