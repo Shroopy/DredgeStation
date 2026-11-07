@@ -52,6 +52,15 @@ find modular_oculis/ -name \*.dmi -exec cp --parents {} $1 \;
 find modular_oculis/modules/GAGS/json_configs -name \*.json -exec cp --parents {} $1 \;
 # OCULIS EDIT ADDITION END
 
+# DREDGE EDIT ADDITION START
+mkdir -p \
+		$1/modular_dredge \
+		$1/modular_dredge/modules/GAGS/json_configs
+
+find modular_dredge/ -name \*.dmi -exec cp --parents {} $1 \;
+find modular_dredge/modules/GAGS/json_configs -name \*.json -exec cp --parents {} $1 \;
+# DREDGE EDIT ADDITION END
+
 cp tgstation.dmb tgstation.rsc $1/
 cp -r _maps/* $1/_maps/
 cp -r build/behavior_trees/* $1/build/behavior_trees/

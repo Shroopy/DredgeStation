@@ -44,13 +44,13 @@ function getCutterPath() {
 
 const cutter_path = getCutterPath();
 
-const define_params_file = 'data/last_define_params.json'
+const define_params_file = 'data/last_define_params.json';
 
 // Have compilation defines changed since last build?
 async function defineParametersChanged(defines: string[]): Promise<boolean> {
   const defines_string = JSON.stringify(defines);
   const params_file = Bun.file(define_params_file);
-  if(!await params_file.exists()) {
+  if (!(await params_file.exists())) {
     await params_file.write(defines_string);
     return true;
   }
@@ -219,6 +219,26 @@ export const DmMapsIncludeTarget = new Juke.Target({
     foldersOculis.push(...Juke.glob('_maps/oculis/**/*.dmm'));
     // OCULIS EDIT ADDITION END
 
+    // DREDGE EDIT ADDITION START
+    const isDredgeTemplate = (file: string) =>
+      file.startsWith('_maps/dredge/') ||
+      file.startsWith('_maps/RandomRuins/SpaceRuins/dredge/') ||
+      file.startsWith('_maps/RandomRuins/IceRuins/dredge/') ||
+      file.startsWith('_maps/RandomRuins/LavaRuins/dredge/') ||
+      file.startsWith('_maps/shuttles/dredge/');
+
+    const foldersDredge = [];
+    for (let i = folders.length - 1; i >= 0; i--) {
+      const file = folders[i];
+      if (isDredgeTemplate(file)) {
+        foldersDredge.push(file);
+        folders.splice(i, 1); // remove from folders
+      }
+    }
+
+    foldersDredge.push(...Juke.glob('_maps/dredge/**/*.dmm'));
+    // DREDGE EDIT ADDITION END
+
     const content = `${folders
       .map((file) => file.replace('_maps/', ''))
       .map((file) => `#include "${file}"`)
@@ -238,15 +258,18 @@ export const DmMapsIncludeTarget = new Juke.Target({
       .join('\n')}\n`;
     fs.writeFileSync('_maps/templates_oculis.dm', contentOculis);
     // OCULIS EDIT ADDITION END
+    // DREDGE EDIT ADDITION START
+    const contentDredge = `${foldersDredge
+      .map((file) => file.replace('_maps/', ''))
+      .map((file) => `#include "${file}"`)
+      .join('\n')}\n`;
+    fs.writeFileSync('_maps/templates_dredge.dm', contentDredge);
+    // DREDGE EDIT ADDITION END
   },
 });
 
 export const BehaviorTreeCompilerTarget = new Juke.Target({
-  inputs: [
-    'code/**/*.bt.json',
-    'code/__DEFINES/**/*.dm',
-    'tools/build_bt.py',
-  ],
+  inputs: ['code/**/*.bt.json', 'code/__DEFINES/**/*.dm', 'tools/build_bt.py'],
   outputs: () => {
     return Juke.glob('code/**/*.bt.json').map((file) => {
       const rel = file.replace(/\.bt\.json$/, '');
@@ -271,6 +294,7 @@ export const DmTarget = new Juke.Target({
     get(DefineParameter).includes('ALL_TEMPLATES') && DmMapsIncludeTarget,
     get(DefineParameter).includes('NOVA_TEMPLATES') && DmMapsIncludeTarget, // NOVA EDIT ADDITION
     get(DefineParameter).includes('OCULIS_TEMPLATES') && DmMapsIncludeTarget, // OCULIS EDIT ADDITION
+    get(DefineParameter).includes('DREDGE_TEMPLATES') && DmMapsIncludeTarget, // DREDGE EDIT ADDITION
     !get(SkipIconCutter) && IconCutterTarget,
     BehaviorTreeCompilerTarget,
   ],
@@ -286,11 +310,15 @@ export const DmTarget = new Juke.Target({
     'modular_nova/**', ///NOVA EDIT ADDITION - Making the CBT work
     'modular_iris/**', /// IRIS ADDITION
     'modular_oculis/**', /// OCULIS EDIT ADDITION
+    'modular_dredge/**', /// DREDGE EDIT ADDITION
     `${DME_NAME}.dme`,
     NamedVersionFile,
   ],
   outputs: async ({ get }) => {
-    if (get(DmVersionParameter) || await defineParametersChanged(get(DefineParameter))) {
+    if (
+      get(DmVersionParameter) ||
+      (await defineParametersChanged(get(DefineParameter)))
+    ) {
       // Always rebuild when a dm version is provided or CLI defines have changed from last run
       return [];
     }
@@ -359,6 +387,7 @@ export const AutowikiTarget = new Juke.Target({
   dependsOn: ({ get }) => [
     get(DefineParameter).includes('NOVA_TEMPLATES') && DmMapsIncludeTarget, // NOVA EDIT ADDITION
     get(DefineParameter).includes('OCULIS_TEMPLATES') && DmMapsIncludeTarget, // OCULIS EDIT ADDITION
+    get(DefineParameter).includes('DREDGE_TEMPLATES') && DmMapsIncludeTarget, // DREDGE EDIT ADDITION
     IconCutterTarget,
   ],
   outputs: ['data/autowiki_edits.txt'],
